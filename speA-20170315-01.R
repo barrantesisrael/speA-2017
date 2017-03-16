@@ -63,3 +63,20 @@ pdf("set02_AvsC_distanceheatmap_20170315.pdf")
 heatmap.2(sampleDistMatrix, col = rev(colors), main = "Set 02\nSample Distances", density.info="none", trace="none", dendrogram="row")
 dev.off()
 
+# 2017-03-16
+# PCA with rlog=blind
+# source https://rdrr.io/bioc/DESeq2/man/rlog.html
+# set #1
+dds <- DESeqDataSetFromMatrix(countData = countsSet01, colData=samples, design=~condition)
+rld <- rlog(dds)
+dists <- dist(t(assay(rld)))
+pdf("set01_complete_AvsC_clusterdendrogram_20170316.pdf")
+plot(hclust(dists), main="Set #1\nTotal read counts (no filtering)")
+dev.off()
+# set #2
+dds <- DESeqDataSetFromMatrix(countData = countsSet02, colData=samples, design=~condition)
+rld <- rlog(dds)
+dists <- dist(t(assay(rld)))
+pdf("set02_complete_AvsC_clusterdendrogram_20170316.pdf")
+plot(hclust(dists), main="Set #2\nTotal read counts (no filtering)")
+dev.off()
